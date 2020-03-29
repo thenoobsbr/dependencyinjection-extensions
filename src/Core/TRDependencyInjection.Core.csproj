@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <Title>TRDependencyInjection.Core</Title>
+    <Authors>Tiago de Carvalho Resende</Authors>
+    <Description>Injection interfaces.</Description>
+    <PackageProjectUrl>https://github.com/tiagor87/tr-dependencyinjection</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/tiagor87/tr-dependencyinjection</RepositoryUrl>
+    <PackageTags>parser, netcore, dotnet, simple, abstraction</PackageTags>
+    <ProjectGuid>{88C13747-C1C0-468A-8F64-859A66A05DDF}</ProjectGuid>
+  </PropertyGroup>
+
+</Project>
