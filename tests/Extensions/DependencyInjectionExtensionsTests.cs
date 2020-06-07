@@ -1,3 +1,4 @@
+using System.Reflection;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
 using Moq;
@@ -56,10 +57,10 @@ namespace TRDependencyInjection.Extensions.Tests
             services.AddInjections(typeof(DependencyInjectionExtensionsTests).Assembly);
 
             using var provider = services.BuildServiceProvider();
-            var transient = provider.GetService<IScoped>();
+            var scoped = provider.GetService<IScoped>();
 
-            transient.Should().NotBeNull();
-            transient.Should().BeOfType<Scoped>();
+            scoped.Should().NotBeNull();
+            scoped.Should().BeOfType<Scoped>();
         }
         
         [Fact]
@@ -69,30 +70,34 @@ namespace TRDependencyInjection.Extensions.Tests
             services.AddInjections(typeof(DependencyInjectionExtensionsTests).Assembly);
 
             using var provider = services.BuildServiceProvider();
-            var transient = provider.GetService<ISingleton>();
+            var singleton = provider.GetService<ISingleton>();
 
-            transient.Should().NotBeNull();
-            transient.Should().BeOfType<Singleton>();
+            singleton.Should().NotBeNull();
+            singleton.Should().BeOfType<Singleton>();
         }
 
         private interface ITransient
         {            
         }
-        private class Transient : ITransientInjection<ITransient>, ITransient
+        
+        [TransientInjection(typeof(ITransient))]
+        private class Transient : ITransient
         {
         }
         
         private interface IScoped
         {            
         }
-        private class Scoped : IScopedInjection<IScoped>, IScoped
+        [ScopedInjection(typeof(IScoped))]
+        private class Scoped : IScoped
         {
         }
         
         private interface ISingleton
         {            
         }
-        private class Singleton : ISingletonInjection<ISingleton>, ISingleton
+        [SingletonInjection(typeof(ISingleton))]
+        private class Singleton : ISingleton
         {
         }
     }

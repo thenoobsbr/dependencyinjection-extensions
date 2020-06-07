@@ -12,46 +12,25 @@ namespace TRDependencyInjection.Extensions
         public static void AddInjections(this IServiceCollection services, params Assembly[] assemblies)
         {
             var types = assemblies.SelectMany(a => a.GetTypes())
-                .Where(IsInjectionImplementation).ToList();
+                .Where(x => x.GetCustomAttribute<InjectionAttribute>() != null).ToList();
             foreach (var type in types)
             {
-                var interfaces = type.GetInjectionInterfaces().ToList();
-                foreach (var i in interfaces)
+                var attribute = type.GetCustomAttribute<InjectionAttribute>();
+                if (attribute != null)
                 {
-                    services.Add(ServiceDescriptor.Describe(i.GenericTypeArguments.First(), type, i.GetServiceLifetime()));
+                    services.Add(ServiceDescriptor.Describe(attribute.InterfaceType, type, attribute.GetServiceLifetime()));
                 }
             }
         }
 
-        private static ServiceLifetime GetServiceLifetime(this Type type)
+        private static ServiceLifetime GetServiceLifetime(this InjectionAttribute attribute)
         {
-            if (type.GetGenericTypeDefinition() == typeof(ISingletonInjection<>))
+            switch (attribute)
             {
-                return ServiceLifetime.Singleton;
+                case ScopedInjectionAttribute _: return ServiceLifetime.Scoped;
+                case SingletonInjectionAttribute _: return ServiceLifetime.Singleton;
+                default: return ServiceLifetime.Transient;
             }
-            if (type.GetGenericTypeDefinition() == typeof(IScopedInjection<>))
-            {
-                return ServiceLifetime.Scoped;
-            }
-            return ServiceLifetime.Transient;
         }
-
-        private static bool IsImplementation(this Type type)
-        {
-            return type.IsClass && !type.IsAbstract;
-        }
-        private static bool IsInjectionImplementation(this Type type)
-        {
-            return type.IsImplementation() && type.GetInjectionInterfaces().Any();
-        }
-        private static IEnumerable<Type> GetInjectionInterfaces(this Type type)
-        {
-            return type.GetInterfaces()
-                .Where(i =>
-                    i.IsGenericType
-                    && typeof(IInjection).IsAssignableFrom(i.GetGenericTypeDefinition())).ToList();
-        }
-
-
     }
 }
