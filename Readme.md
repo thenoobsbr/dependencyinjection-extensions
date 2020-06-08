@@ -11,8 +11,8 @@ Facilita a injeção de depedências através de anotações nas classes.
 Anote sua classe com uma das anotações disponíveis.
 
 ```c#
-[ScopedInjection(typeof(IOrderRepository))]
-class OrderRepository : IOrderRepository
+[ScopedInjection(typeof(IOrderRepository), typeof(IOrderRepositoryReadOnly))]
+class OrderRepository : IOrderRepository, IOrderRepositoryReadOnly
 {
 }
 

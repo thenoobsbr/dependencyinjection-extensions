@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
@@ -13,13 +12,27 @@ namespace TRDependencyInjection.Extensions
         {
             var types = assemblies.SelectMany(a => a.GetTypes())
                 .Where(x => x.GetCustomAttribute<InjectionAttribute>() != null).ToList();
-            foreach (var type in types)
+            foreach (var implementationType in types)
             {
-                var attribute = type.GetCustomAttribute<InjectionAttribute>();
-                if (attribute != null)
+                var attribute = implementationType.GetCustomAttribute<InjectionAttribute>();
+                var mainInterfaceType = attribute.InterfaceTypes.First();
+                
+                services.Add(ServiceDescriptor.Describe(mainInterfaceType, implementationType, attribute.GetServiceLifetime()));
+                foreach (var interfaceType in attribute.InterfaceTypes.Skip(1))
                 {
-                    services.Add(ServiceDescriptor.Describe(attribute.InterfaceType, type, attribute.GetServiceLifetime()));
+                    services.Add(ServiceDescriptor.Describe(
+                        interfaceType,
+                        provider => provider.GetService(mainInterfaceType),
+                        GetServiceLifetime(attribute)));
                 }
+            }
+        }
+
+        private static void ValidateTypeToInterface(Type implementationType, Type interfaceType)
+        {
+            if (!interfaceType.IsAssignableFrom(implementationType))
+            {
+                throw new InvalidCastException($"The type {implementationType.FullName} is not assignable to {interfaceType.FullName}.");
             }
         }
 

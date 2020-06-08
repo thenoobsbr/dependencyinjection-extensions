@@ -4,7 +4,7 @@ namespace TRDependencyInjection.Core
 {
     public class ScopedInjectionAttribute : InjectionAttribute
     {
-        public ScopedInjectionAttribute(Type interfaceType) : base(interfaceType)
+        public ScopedInjectionAttribute(params Type[] interfaceTypes) : base(interfaceTypes)
         {
         }
     }

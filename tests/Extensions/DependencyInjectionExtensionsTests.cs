@@ -1,3 +1,5 @@
+using System;
+using System.Collections.Generic;
 using System.Reflection;
 using FluentAssertions;
 using Microsoft.Extensions.DependencyInjection;
@@ -76,6 +78,20 @@ namespace TRDependencyInjection.Extensions.Tests
             singleton.Should().BeOfType<Singleton>();
         }
 
+        [Fact]
+        public void GivenDependencyInjectionExtensionsShouldAddMultipleTypes()
+        {
+            IServiceCollection services = new ServiceCollection();
+            services.AddInjections(typeof(DependencyInjectionExtensionsTests).Assembly);
+
+            using var provider = services.BuildServiceProvider();
+            var scoped = provider.GetService<IScoped>();
+            var scoped2 = provider.GetService<IScoped2>();
+
+            scoped.Should().NotBeNull();
+            scoped.Should().Be(scoped2);
+        }
+
         private interface ITransient
         {            
         }
@@ -88,8 +104,11 @@ namespace TRDependencyInjection.Extensions.Tests
         private interface IScoped
         {            
         }
-        [ScopedInjection(typeof(IScoped))]
-        private class Scoped : IScoped
+        private interface IScoped2
+        {            
+        }
+        [ScopedInjection(typeof(IScoped), typeof(IScoped2))]
+        private class Scoped : IScoped, IScoped2
         {
         }
         

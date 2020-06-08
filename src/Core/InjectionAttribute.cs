@@ -4,11 +4,11 @@ namespace TRDependencyInjection.Core
 {
     public abstract class InjectionAttribute : Attribute
     {
-        protected InjectionAttribute(Type interfaceType)
+        protected InjectionAttribute(Type[] interfaceTypes)
         {
-            InterfaceType = interfaceType;
+            InterfaceTypes = interfaceTypes;
         }
         
-        public Type InterfaceType { get; }
+        public Type[] InterfaceTypes { get; }
     }
 }
