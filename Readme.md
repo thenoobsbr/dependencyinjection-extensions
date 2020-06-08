@@ -1,4 +1,10 @@
-﻿# TRDependencyInjection
+﻿
+﻿[![Build status](https://tiagor87.visualstudio.com/OpenSource/_apis/build/status/Seedwork.Cqrs.Bus)](https://tiagor87.visualstudio.com/OpenSource/_build/latest?definitionId=9)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=tiagor87_tr-dependencyinjection&metric=coverage)](https://sonarcloud.io/dashboard?id=tiagor87_tr-dependencyinjection)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tiagor87_tr-dependencyinjection&metric=alert_status)](https://sonarcloud.io/dashboard?id=tiagor87_tr-dependencyinjection)
+[![NuGet](https://buildstats.info/nuget/TRDependencyInjection.Extensions)](http://www.nuget.org/packages/TRDependencyInjection.Extensions)
+ 
+ # TRDependencyInjection
 
 Facilita a injeção de depedências através de anotações nas classes.
 
