@@ -28,14 +28,6 @@ namespace TRDependencyInjection.Extensions
             }
         }
 
-        private static void ValidateTypeToInterface(Type implementationType, Type interfaceType)
-        {
-            if (!interfaceType.IsAssignableFrom(implementationType))
-            {
-                throw new InvalidCastException($"The type {implementationType.FullName} is not assignable to {interfaceType.FullName}.");
-            }
-        }
-
         private static ServiceLifetime GetServiceLifetime(this InjectionAttribute attribute)
         {
             switch (attribute)
