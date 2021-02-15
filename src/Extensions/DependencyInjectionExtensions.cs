@@ -15,14 +15,17 @@ namespace TRDependencyInjection.Extensions
             foreach (var implementationType in types)
             {
                 var attribute = implementationType.GetCustomAttribute<InjectionAttribute>();
-                var mainInterfaceType = attribute.InterfaceTypes.First();
+                services.Add(ServiceDescriptor.Describe(
+                    implementationType,
+                    implementationType,
+                    GetServiceLifetime(attribute)));
                 
-                services.Add(ServiceDescriptor.Describe(mainInterfaceType, implementationType, attribute.GetServiceLifetime()));
-                foreach (var interfaceType in attribute.InterfaceTypes.Skip(1))
+                services.Add(ServiceDescriptor.Describe(implementationType, implementationType, attribute.GetServiceLifetime()));
+                foreach (var interfaceType in attribute.InterfaceTypes)
                 {
                     services.Add(ServiceDescriptor.Describe(
                         interfaceType,
-                        provider => provider.GetService(mainInterfaceType),
+                        provider => provider.GetService(implementationType),
                         GetServiceLifetime(attribute)));
                 }
             }
