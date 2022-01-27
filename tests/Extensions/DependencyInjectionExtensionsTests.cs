@@ -123,6 +123,20 @@ namespace TRDependencyInjection.Extensions.Tests
         }
         
         [Fact]
+        public void GivenDependencyInjectionExtensionsShouldAddFactoryTypes()
+        {
+            IServiceCollection services = new ServiceCollection();
+            services.AddInjections(typeof(DependencyInjectionExtensionsTests).Assembly);
+
+            using var provider = services.BuildServiceProvider();
+            var scoped = provider.GetService<IScopedFactory>();
+            var scoped2 = provider.GetService<IScopedFactory2>();
+
+            scoped.Should().NotBeNull();
+            scoped.Should().Be(scoped2);
+        }
+        
+        [Fact]
         public void GivenDependencyInjectionExtensionsShouldAddImplementationTypeAsInterface()
         {
             IServiceCollection services = new ServiceCollection();
@@ -146,11 +160,23 @@ namespace TRDependencyInjection.Extensions.Tests
         private interface IScoped
         {            
         }
+        private interface IScopedFactory
+        {
+        }
+        private interface IScopedFactory2
+        {
+        }
         private interface IScoped2
         {            
         }
         [ScopedInjection(typeof(IScoped), typeof(IScoped2))]
         private class Scoped : IScoped, IScoped2
+        {
+        }
+
+        [ScopedInjection(typeof(IScopedFactory))]
+        [ScopedInjection(new [] { typeof(IScopedFactory2) }, typeof(IScopedFactory))]
+        private class ScopedFactory : IScopedFactory, IScopedFactory2
         {
         }
         

@@ -11,23 +11,52 @@ namespace TRDependencyInjection.Extensions
         public static void AddInjections(this IServiceCollection services, params Assembly[] assemblies)
         {
             var types = assemblies.SelectMany(a => a.GetTypes())
-                .Where(x => x.GetCustomAttribute<InjectionAttribute>() != null).ToList();
+                .Where(HasInjectionAttributes).ToList();
             foreach (var implementationType in types)
             {
-                var attribute = implementationType.GetCustomAttribute<InjectionAttribute>();
-                services.Add(ServiceDescriptor.Describe(
-                    implementationType,
-                    implementationType,
-                    GetServiceLifetime(attribute)));
-                
-                services.Add(ServiceDescriptor.Describe(implementationType, implementationType, attribute.GetServiceLifetime()));
+                RegisterServiceToInterfaces(services, implementationType);
+            }
+
+            bool HasInjectionAttributes(Type type)
+            {
+                return type.GetCustomAttributes<InjectionAttribute>().Any();
+            }
+        }
+
+        private static void RegisterServiceToInterfaces(IServiceCollection services, Type implementationType)
+        {
+            var attributes = implementationType.GetCustomAttributes<InjectionAttribute>().ToList();
+
+            foreach (var attribute in attributes)
+            {
+                Register(attribute);
+            }
+
+            void Register(InjectionAttribute attribute)
+            {
+                if (attribute.RegisteredType is null)
+                {
+                    services.Add(ServiceDescriptor.Describe(implementationType, implementationType,
+                        attribute.GetServiceLifetime()));
+                }
+
                 foreach (var interfaceType in attribute.InterfaceTypes)
                 {
                     services.Add(ServiceDescriptor.Describe(
                         interfaceType,
-                        provider => provider.GetService(implementationType),
+                        sp => CreateService(sp, attribute),
                         GetServiceLifetime(attribute)));
                 }
+            }
+            
+            object CreateService(IServiceProvider provider, InjectionAttribute attribute)
+            {
+                if (attribute.RegisteredType is null)
+                {
+                    return provider.GetService(implementationType);
+                }
+
+                return provider.GetService(attribute.RegisteredType);
             }
         }
 

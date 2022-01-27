@@ -32,7 +32,16 @@ class OrderEventHandler: IDomainEventHandler<Order>
 {
 }
 
-``` 
+```
+
+You can retrieve a instance of a registered type if you want.
+
+```c#
+[ScopedInjection(new [] { typeof(IUnitOfWork) }, typeof(CustomDbContext)]
+class CustomDbContext : DbContext, IUnitOfWork
+{
+}
+```
 
 Durante a configuração dos serviçoes, chame o método __AddInjections__ fornecendo os assemblies que deseja que sejam analisados.
 ```c#
