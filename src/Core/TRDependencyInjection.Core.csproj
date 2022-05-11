@@ -11,4 +11,10 @@
     <ProjectGuid>{88C13747-C1C0-468A-8F64-859A66A05DDF}</ProjectGuid>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="3.1.3" />
+  </ItemGroup>
+
 </Project>

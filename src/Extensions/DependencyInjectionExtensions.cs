@@ -1,7 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Threading;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Primitives;
 using TRDependencyInjection.Core;
 
 namespace TRDependencyInjection.Extensions
@@ -9,6 +14,33 @@ namespace TRDependencyInjection.Extensions
     public static class DependencyInjectionExtensions
     {
         public static void AddInjections(this IServiceCollection services, params Assembly[] assemblies)
+        {
+            services.AddInjectionAttributes(assemblies);
+        }
+        
+        public static void AddInjections(this IServiceCollection services, IConfiguration configuration, params Assembly[] assemblies)
+        {
+            services.AddInjectionAttributes(assemblies);
+            services.AddInjectionModules(configuration, assemblies);
+        }
+        
+        public static void AddInjectionModules(this IServiceCollection services, IConfiguration configuration, params Assembly[] assemblies)
+        {
+            foreach (var serviceSetup in GetModuleSetups<IServiceModuleSetup>(assemblies))
+            {
+                serviceSetup.Setup(services, configuration);
+            }
+        }
+        
+        public static void UseInjections(this IApplicationBuilder applicationBuilder, params Assembly[] assemblies)
+        {
+            foreach (var serviceSetup in GetModuleSetups<IApplicationModuleSetup>(assemblies))
+            {
+                serviceSetup.Setup(applicationBuilder);
+            }
+        }
+
+        public static void AddInjectionAttributes(this IServiceCollection services, params Assembly[] assemblies)
         {
             var types = assemblies.SelectMany(a => a.GetTypes())
                 .Where(HasInjectionAttributes).ToList();
@@ -20,6 +52,22 @@ namespace TRDependencyInjection.Extensions
             bool HasInjectionAttributes(Type type)
             {
                 return type.GetCustomAttributes<InjectionAttribute>().Any();
+            }
+        }
+        
+        private static ICollection<T> GetModuleSetups<T>(Assembly[] assemblies)
+        {
+            return assemblies
+                .SelectMany(a => a.GetTypes())
+                .Where(IsModuleServiceSetup)
+                .Select(Activator.CreateInstance)
+                .Cast<T>()
+                .OrderBy(x => x is IOrderedModule orderedModule ? orderedModule.Order : int.MaxValue)
+                .ToList();
+            
+            bool IsModuleServiceSetup(Type type)
+            {
+                return typeof(T).IsAssignableFrom(type) && type.IsClass && !type.IsAbstract;
             }
         }
 
