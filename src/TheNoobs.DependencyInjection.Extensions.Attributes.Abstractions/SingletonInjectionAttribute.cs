@@ -2,7 +2,7 @@
 {
     public class SingletonInjectionAttribute : InjectionAttribute
     {
-        public SingletonInjectionAttribute() : base(new Type[]{})
+        public SingletonInjectionAttribute() : base(Array.Empty<Type>())
         {
         }
         

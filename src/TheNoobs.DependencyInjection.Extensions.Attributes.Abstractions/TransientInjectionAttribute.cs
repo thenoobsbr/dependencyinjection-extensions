@@ -2,7 +2,7 @@
 {
     public class TransientInjectionAttribute : InjectionAttribute
     {
-        public TransientInjectionAttribute() : base(new Type[]{})
+        public TransientInjectionAttribute() : base(Array.Empty<Type>())
         {
         }
         
