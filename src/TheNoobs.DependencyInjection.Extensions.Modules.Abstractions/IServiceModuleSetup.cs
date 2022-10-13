@@ -1,7 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace TRDependencyInjection.Core
+namespace TheNoobs.DependencyInjection.Extensions.Modules.Abstractions
 {
     public interface IServiceModuleSetup
     {

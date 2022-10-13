@@ -1,0 +1,43 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net6.0;netstandard2.0</TargetFrameworks>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>true</ImplicitUsings>
+    <IsPackable>true</IsPackable>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+    <OutputType>library</OutputType>
+    <GenerateFullPaths>true</GenerateFullPaths>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>$(NoWarn);1591</NoWarn>
+
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Authors>The Noobs</Authors>
+    <NeutralLanguage>en-US</NeutralLanguage>
+    <RepositoryType>GIT</RepositoryType>
+    <LangVersion>default</LangVersion>
+    <PackageIcon>icon.png</PackageIcon>
+
+    <PackageId>TheNoobs.DependencyInjection.Extensions.Modules.Abstractions</PackageId>
+    <Description>Register types in IOC searching for injection interfaces.</Description>
+    <PackageProjectUrl>https://github.com/thenoobsbr/dependency-injection-extensions</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/thenoobsbr/dependency-injection-extensions</RepositoryUrl>
+    <PackageTags>dependencyinjection, ioc, module, netcore, dotnet, simple, abstraction</PackageTags>
+
+    <UserSecretsId>{321B9D46-BE2F-4AAE-BA24-F01D7A79C5EB}</UserSecretsId>
+    <ProjectGuid>{88C13747-C1C0-468A-8F64-859A66A05DDF}</ProjectGuid>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\images\icon.png" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Hosting.Abstractions" Version="2.2.0" />
+    <PackageReference Include="Microsoft.Extensions.Configuration.Abstractions" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="6.0.0" />
+  </ItemGroup>
+
+</Project>

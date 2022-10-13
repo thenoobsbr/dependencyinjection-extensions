@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TRDependencyInjection.Core
+﻿namespace TheNoobs.DependencyInjection.Extensions.Attributes.Abstractions
 {
     public class TransientInjectionAttribute : InjectionAttribute
     {

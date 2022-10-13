@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace TRDependencyInjection.Core
+﻿namespace TheNoobs.DependencyInjection.Extensions.Attributes.Abstractions
 {
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = true, Inherited = false)]
     public abstract class InjectionAttribute : Attribute
@@ -8,6 +6,7 @@ namespace TRDependencyInjection.Core
         protected InjectionAttribute(Type[] interfaceTypes)
         {
             InterfaceTypes = interfaceTypes;
+            RegisteredType = null;
         }
         
         protected InjectionAttribute(Type[] interfaceTypes, Type registeredType) : this(interfaceTypes)
@@ -16,6 +15,6 @@ namespace TRDependencyInjection.Core
         }
         
         public Type[] InterfaceTypes { get; }
-        public Type RegisteredType { get; }
+        public Type? RegisteredType { get; }
     }
 }

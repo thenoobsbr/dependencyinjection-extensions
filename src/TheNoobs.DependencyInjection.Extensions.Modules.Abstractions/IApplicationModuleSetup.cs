@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Builder;
 
-namespace TRDependencyInjection.Core
+namespace TheNoobs.DependencyInjection.Extensions.Modules.Abstractions
 {
     public interface IApplicationModuleSetup
     {

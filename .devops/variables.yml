@@ -1,0 +1,4 @@
+﻿variables:
+  - group: dependencyinjection-extensions
+  - group: sonar
+  - group: nuget
