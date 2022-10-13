@@ -19,14 +19,14 @@
     <LangVersion>default</LangVersion>
     <PackageIcon>icon.png</PackageIcon>
 
-    <PackageId>TheNoobs.DependencyInjection.Extensions.Modules</PackageId>
+    <PackageId>TheNoobs.DependencyInjection.Extensions.Attributes</PackageId>
     <Description>Register types in IOC searching for injection interfaces.</Description>
     <PackageProjectUrl>https://github.com/thenoobsbr/dependency-injection-extensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/thenoobsbr/dependency-injection-extensions</RepositoryUrl>
-    <PackageTags>dependencyinjection, ioc, module, netcore, dotnet, simple, abstraction</PackageTags>
+    <PackageTags>dependencyinjection, ioc, module, attributes, netcore, dotnet, simple, abstraction</PackageTags>
 
-    <UserSecretsId>{69BE10D8-035D-4626-B96F-C85963BAED86}</UserSecretsId>
-    <ProjectGuid>{9623B6DF-A48B-43A8-BA72-43268AC45221}</ProjectGuid>
+    <UserSecretsId>{6E9946A7-F927-412E-B087-DDE08FC31927}</UserSecretsId>
+    <ProjectGuid>{22900B71-8E20-41A7-B9BA-37BF91084562}</ProjectGuid>
   </PropertyGroup>
 
   <ItemGroup>
