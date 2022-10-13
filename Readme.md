@@ -1,10 +1,12 @@
 ﻿
-﻿[![Build status](https://tiagor87.visualstudio.com/OpenSource/_apis/build/status/Seedwork.Cqrs.Bus)](https://tiagor87.visualstudio.com/OpenSource/_build/latest?definitionId=9)
-[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=tiagor87_tr-dependencyinjection&metric=coverage)](https://sonarcloud.io/dashboard?id=tiagor87_tr-dependencyinjection)
-[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=tiagor87_tr-dependencyinjection&metric=alert_status)](https://sonarcloud.io/dashboard?id=tiagor87_tr-dependencyinjection)
-[![NuGet](https://buildstats.info/nuget/TRDependencyInjection.Extensions)](http://www.nuget.org/packages/TRDependencyInjection.Extensions)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=thenoobsbr_dependencyinjection-extensions&metric=coverage)](https://sonarcloud.io/dashboard?id=thenoobsbr_dependencyinjection-extensions)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=thenoobsbr_dependencyinjection-extensions&metric=alert_status)](https://sonarcloud.io/dashboard?id=thenoobsbr_dependencyinjection-extensions)
+[![NuGet](https://buildstats.info/nuget/TheNoobs.DependencyInjection.Extensions.Modules.Abstractions)](http://www.nuget.org/packages/TheNoobs.DependencyInjection.Extensions.Modules.Abstractions)
+[![NuGet](https://buildstats.info/nuget/TheNoobs.DependencyInjection.Extensions.Modules)](http://www.nuget.org/packages/TheNoobs.DependencyInjection.Extensions.Modules)
+[![NuGet](https://buildstats.info/nuget/TheNoobs.DependencyInjection.Extensions.Attributes.Abstractions)](http://www.nuget.org/packages/TheNoobs.DependencyInjection.Extensions.Attributes.Abstractions)
+[![NuGet](https://buildstats.info/nuget/TheNoobs.DependencyInjection.Extensions.Attributes)](http://www.nuget.org/packages/TheNoobs.DependencyInjection.Extensions.Attributes)
  
- # TRDependencyInjection
+ # TheNoobs.DependencyInjection.Extensions
 
 Facilita a injeção de depedências através de anotações nas classes.
 
