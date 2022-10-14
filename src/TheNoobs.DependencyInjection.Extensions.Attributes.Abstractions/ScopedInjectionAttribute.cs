@@ -2,7 +2,7 @@
 {
     public class ScopedInjectionAttribute : InjectionAttribute
     {
-        public ScopedInjectionAttribute() : base(new Type[]{})
+        public ScopedInjectionAttribute() : base(Array.Empty<Type>())
         {
         }
         

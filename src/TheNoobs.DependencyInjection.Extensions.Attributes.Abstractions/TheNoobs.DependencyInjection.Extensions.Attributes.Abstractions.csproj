@@ -24,7 +24,7 @@
     <Description>Register types in IOC searching for injection interfaces.</Description>
     <PackageProjectUrl>https://github.com/thenoobsbr/dependency-injection-extensions</PackageProjectUrl>
     <RepositoryUrl>https://github.com/thenoobsbr/dependency-injection-extensions</RepositoryUrl>
-    <PackageTags>dependencyinjection, ioc, module, netcore, dotnet, simple, abstraction</PackageTags>
+    <PackageTags>dependencyinjection, attributes, ioc, module, netcore, dotnet, simple, abstraction</PackageTags>
 
     <UserSecretsId>{8FE0BF02-306C-46F9-AB94-41E910D547F0}</UserSecretsId>
     <ProjectGuid>{BBF4D39D-AA8A-47BC-AA1D-B76EBAB191DB}</ProjectGuid>

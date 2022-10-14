@@ -120,7 +120,7 @@ namespace TheNoobs.DependencyInjection.Extensions.Attributes.UnitTests
         }
         
         [Fact]
-        public void GivenDependencyInjectionExtensionsShouldAddFactoryTypes()
+        public void GivenDependencyInjectionExtensionsShouldAddScopedFactoryTypes()
         {
             IServiceCollection services = new ServiceCollection();
             services.AddInjections(typeof(DependencyInjectionExtensionsTests).Assembly);
@@ -131,6 +131,20 @@ namespace TheNoobs.DependencyInjection.Extensions.Attributes.UnitTests
 
             scoped.Should().NotBeNull();
             scoped.Should().Be(scoped2);
+        }
+        
+        [Fact]
+        public void GivenDependencyInjectionExtensionsShouldAddSingletonFactoryTypes()
+        {
+            IServiceCollection services = new ServiceCollection();
+            services.AddInjections(typeof(DependencyInjectionExtensionsTests).Assembly);
+
+            using var provider = services.BuildServiceProvider();
+            var factory = provider.GetService<ISingletonFactory>();
+            var factory2 = provider.GetService<ISingletonFactory2>();
+
+            factory.Should().NotBeNull();
+            factory.Should().Be(factory2);
         }
         
         [Fact]
@@ -149,8 +163,19 @@ namespace TheNoobs.DependencyInjection.Extensions.Attributes.UnitTests
         {            
         }
         
+        private interface ITransient2
+        {            
+        }
+        
+        private interface ITransient3
+        {            
+        }
+        
+        [TransientInjection]
         [TransientInjection(typeof(ITransient))]
-        private class Transient : ITransient
+        [TransientInjection(typeof(ITransient), typeof(ITransient2))]
+        [TransientInjection(typeof(ITransient), typeof(ITransient2), typeof(ITransient3))]
+        private class Transient : ITransient, ITransient2, ITransient3
         {
         }
         
@@ -166,8 +191,16 @@ namespace TheNoobs.DependencyInjection.Extensions.Attributes.UnitTests
         private interface IScoped2
         {            
         }
+        
+        private interface IScoped3
+        {
+        }
+        
+        [ScopedInjection]
+        [ScopedInjection(typeof(IScoped))]
         [ScopedInjection(typeof(IScoped), typeof(IScoped2))]
-        private class Scoped : IScoped, IScoped2
+        [ScopedInjection(typeof(IScoped), typeof(IScoped2), typeof(IScoped3))]
+        private class Scoped : IScoped, IScoped2, IScoped3
         {
         }
 
@@ -180,8 +213,34 @@ namespace TheNoobs.DependencyInjection.Extensions.Attributes.UnitTests
         private interface ISingleton
         {            
         }
+        
+        private interface ISingleton2
+        {            
+        }
+        
+        private interface ISingleton3
+        {            
+        }
+        
+        [SingletonInjection]
         [SingletonInjection(typeof(ISingleton))]
+        [SingletonInjection(typeof(ISingleton), typeof(ISingleton2))]
+        [SingletonInjection(typeof(ISingleton), typeof(ISingleton2), typeof(ISingleton3))]
         private class Singleton : ISingleton
+        {
+        }
+        
+        private interface ISingletonFactory
+        {
+        }
+        
+        private interface ISingletonFactory2
+        {
+        }
+
+        [SingletonInjection(typeof(ISingletonFactory))]
+        [SingletonInjection(new []{ typeof(ISingletonFactory2) }, typeof(ISingletonFactory))]
+        private class SingletonFactory : ISingletonFactory, ISingletonFactory2
         {
         }
 
