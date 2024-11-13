@@ -1,7 +1,6 @@
-﻿namespace TheNoobs.DependencyInjection.Extensions.Modules.Abstractions
+﻿namespace TheNoobs.DependencyInjection.Extensions.Modules.Abstractions;
+
+public interface IOrderedModule
 {
-    public interface IOrderedModule
-    {
-        int Order { get; }
-    }
+    int Order { get; }
 }

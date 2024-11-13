@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Builder;
 
-namespace TheNoobs.DependencyInjection.Extensions.Modules.Abstractions
+namespace TheNoobs.DependencyInjection.Extensions.Modules.Abstractions;
+
+public interface IApplicationModuleSetup
 {
-    public interface IApplicationModuleSetup
-    {
-        void Setup(IApplicationBuilder appBuilder);
-    }
+        
+    void Setup(IApplicationBuilder appBuilder);
 }
