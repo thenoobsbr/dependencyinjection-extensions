@@ -41,7 +41,7 @@ public static class DependencyInjectionExtensions
             
         bool IsModuleServiceSetup(Type type)
         {
-            return typeof(T).IsAssignableFrom(type) && type.IsClass && !type.IsAbstract;
+            return typeof(T).IsAssignableFrom(type) && type is { IsClass: true, IsAbstract: false };
         }
     }
 }
