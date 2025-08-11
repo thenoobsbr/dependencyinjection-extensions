@@ -13,6 +13,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{5335B115
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TheNoobs.DependencyInjection.Extensions.Modules.UnitTests", "tests\TheNoobs.DependencyInjection.Extensions.Modules.UnitTests\TheNoobs.DependencyInjection.Extensions.Modules.UnitTests.csproj", "{A6C3C172-C7E3-4F4E-9C2C-7AF29E8C022F}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionFolder", "SolutionFolder", "{6020DB30-ED78-4979-B374-DF68E25CA64D}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

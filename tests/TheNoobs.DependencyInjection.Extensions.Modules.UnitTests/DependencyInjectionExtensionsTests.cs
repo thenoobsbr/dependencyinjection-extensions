@@ -4,6 +4,7 @@ using FluentAssertions;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Moq;
 using TheNoobs.DependencyInjection.Extensions.Modules.Abstractions;
 using Xunit;
@@ -15,12 +16,11 @@ public class DependencyInjectionExtensionsTests
     [Fact]
     public void GivenDependencyInjectionExtensionsWhenAddModuleShouldSetup()
     {
-        IConfiguration configuration = new ConfigurationBuilder().Build();
-        IServiceCollection services = new ServiceCollection();
-        services.AddInjections(configuration, typeof(DependencyInjectionExtensionsTests).Assembly);
-
-        using var provider = services.BuildServiceProvider();
-        var testClass = provider.GetService<ModuleTestClass>();
+        var builder = new HostApplicationBuilder();
+        builder.AddInjections(typeof(DependencyInjectionExtensionsTests).Assembly);
+        
+        var app = builder.Build();
+        var testClass = app.Services.GetService<ModuleTestClass>();
 
         testClass.Should().NotBeNull();
         testClass.Should().BeOfType<ModuleTestClass>();
@@ -52,7 +52,7 @@ public class DependencyInjectionExtensionsTests
     {
         public void Setup(IServiceCollection services, IConfiguration configuration)
         {
-            services.AddScoped<ModuleTestClass>();
+            services.AddSingleton<ModuleTestClass>();
         }
     }
         
@@ -83,7 +83,7 @@ public class DependencyInjectionExtensionsTests
         public void Setup(IServiceCollection services, IConfiguration configuration)
         {
             services.Any(x => x.ServiceType == typeof(OrderClassTest)).Should().BeFalse();
-            services.AddScoped<OrderClassTest>();
+            services.AddSingleton<OrderClassTest>();
         }
 
         public int Order => 1;

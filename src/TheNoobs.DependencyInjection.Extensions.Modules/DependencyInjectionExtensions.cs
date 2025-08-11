@@ -2,30 +2,36 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using TheNoobs.DependencyInjection.Extensions.Modules.Abstractions;
 
 namespace TheNoobs.DependencyInjection.Extensions.Modules;
 
 public static class DependencyInjectionExtensions
 {
-    public static void AddInjections(this IServiceCollection services, IConfiguration configuration, params Assembly[] assemblies)
+    public static void AddInjections(this IHostApplicationBuilder builder, params Assembly[] assemblies)
     {
-        services.AddInjectionModules(configuration, assemblies);
-    }
-        
-    private static void AddInjectionModules(this IServiceCollection services, IConfiguration configuration, params Assembly[] assemblies)
-    {
-        foreach (var serviceSetup in GetModuleSetups<IServiceModuleSetup>(assemblies))
+        foreach (var module in GetModuleSetups<IHostApplicationModule>(assemblies))
         {
-            serviceSetup.Setup(services, configuration);
+            module.Setup(builder);
         }
+        
+        builder.Services.AddInjectionModules(builder.Configuration, assemblies);
     }
         
     public static void UseInjections(this IApplicationBuilder applicationBuilder, params Assembly[] assemblies)
     {
-        foreach (var serviceSetup in GetModuleSetups<IApplicationModuleSetup>(assemblies))
+        foreach (var module in GetModuleSetups<IApplicationModuleSetup>(assemblies))
         {
-            serviceSetup.Setup(applicationBuilder);
+            module.Setup(applicationBuilder);
+        }
+    }
+    
+    private static void AddInjectionModules(this IServiceCollection services, IConfiguration configuration, params Assembly[] assemblies)
+    {
+        foreach (var module in GetModuleSetups<IServiceModuleSetup>(assemblies))
+        {
+            module.Setup(services, configuration);
         }
     }
         
